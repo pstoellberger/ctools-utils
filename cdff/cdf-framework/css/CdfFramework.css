@@ -1,0 +1,137 @@
+
+body {
+	background-color: #FDFDFD;
+	min-width: 1052px;
+    min-height: 600px;
+    overflow: auto;
+
+}
+
+.wrapper {
+	position: relative;
+	top: 80px;
+}
+
+.dataTables_wrapper table thead th {
+	background-color: #EFEFEF;
+}
+.dataTables_wrapper table.table thead .sorting,
+.dataTables_wrapper table.table thead .sorting_asc,
+.dataTables_wrapper table.table thead .sorting_desc,
+.dataTables_wrapper table.table thead .sorting_asc_disabled,
+.dataTables_wrapper table.table thead .sorting_desc_disabled {
+    cursor: pointer;
+    *cursor: hand;
+}
+.dataTables_wrapper table.table td.sorting_1,
+tr.even td.sorting_1, tr.odd td.sorting_1 {
+	background: none;
+}
+
+
+div.dataTables_length label {
+    width: 460px;
+    float: left;
+    text-align: left;
+}
+ 
+div.dataTables_length select {
+    width: 75px;
+}
+ 
+div.dataTables_filter label {
+    float: right;
+    width: 460px;
+}
+ 
+div.dataTables_info {
+    padding-top: 8px;
+}
+ 
+div.dataTables_paginate {
+    float: right;
+    margin: 0;
+    width: 100%;
+}
+ 
+.dataTables_wrapper table {
+    margin: 1em 0;
+    clear: both;
+}
+/*
+.dataTables_wrapper .expandingClass .dataTables_wrapper thead {
+	display: none;
+} 
+*/
+td.expandingClass {
+	padding-left: 50px !important ;
+}
+
+.dataTables_wrapper {
+	position: relative;
+	clear: both;
+	_height: 302px;
+	zoom: 1; /* Feeling sorry for IE */
+}
+
+.dataTables_processing {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 250px;
+	height: 30px;
+	margin-left: -125px;
+	margin-top: -15px;
+	padding: 14px 0 2px 0;
+	border: 1px solid #ddd;
+	text-align: center;
+	color: #999;
+	font-size: 14px;
+	background-color: white;
+}
+
+.dataTables_length {
+	width: 40%;
+	float: left;
+}
+
+.dataTables_filter {
+	width: 150px;
+	text-align: right;
+	padding-bottom: 10px;
+	float:right;
+}
+
+.dataTables_info {
+	width: 60%;
+	float: left;
+}
+
+
+.dataTables_wrapper table.table thead .sorting { background: url('../images/sort_both.png') no-repeat center right; }
+.dataTables_wrapper table.table thead .sorting_asc { background: url('../images/sort_asc.png') no-repeat center right; }
+.dataTables_wrapper table.table thead .sorting_desc { background: url('../images/sort_desc.png') no-repeat center right; }
+ 
+.dataTables_wrapper table.table thead .sorting_asc_disabled { background: url('../images/sort_asc_disabled.png') no-repeat center right; }
+.dataTables_wrapper table.table thead .sorting_desc_disabled { background: url('../images/sort_desc_disabled.png') no-repeat center right; }
+
+.dataTables_wrapper table.table td.arrow_up { padding-right: 20px; background-image: url('../images/arrow-up.gif'); background-position: 95% 50%; background-repeat: no-repeat; }
+.dataTables_wrapper table.table td.arrow_down { padding-right: 20px; background-image: url('../images/arrow-down.gif'); background-position: 95% 50%; background-repeat: no-repeat; }
+.dataTables_wrapper table.table td.arrow_none { padding-right: 20px; background-image: url('../images/arrow-none.gif'); background-position: 95% 50%; background-repeat: no-repeat; }
+
+
+.dataTables_wrapper td.numeric {
+	text-align: right;
+	font-family: inherit;
+}
+
+
+.dataTables_wrapper td.total {
+	text-align: right;
+	font-weight: 500;
+}
+
+.dataTables_wrapper table tr:hover > td {
+	background-color: #edf4fa !important;
+	cursor: pointer;
+}
