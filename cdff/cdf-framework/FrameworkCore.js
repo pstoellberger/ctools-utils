@@ -86,9 +86,12 @@ Dashboards.preInit = function () {
         } else if (component.type == "Table") {
             Dashboards.log("found table");
 
-            component.extraOptions = _.union(component.extraOptions, [["sSortable","header"],["sPaginationType","bootstrap"],["sSortAsc","header headerSortUp"],["sSortDesc","header headerSortDown"],["bAutoWidth","false"]]);
-
-            component.postExecution =  function() {
+            component.extraOptions = _.union(component.extraOptions, [["sSortable","header"],["sPaginationType","bootstrap"],["sSortAsc","header headerSortUp"],["sSortDesc","header headerSortDown"]]);
+            var previousPostExec = null;
+            if (component.postExecution) {
+                previousPostExec = component.postExecution;
+            }
+            var bootstrapTable = function() {
                     component.ph.find('.tableComponent').addClass('form-inline table table-striped table-bordered');
                     component.ph.find('.dataTables_paginate ul').addClass('pagination');
                     component.ph.find('.dataTables_filter input').addClass('form-control');
@@ -102,6 +105,18 @@ Dashboards.preInit = function () {
                         Dashboards.log("render arrow for " + component.name );
                         render_arrow(component.ph, component.name);
                     }
+                    var group = (_.find(component.extraOptions, function(e) { return e[0] == "group";}));
+                    if (group && group[1]) {
+                        Dashboards.log("group table by " + group[1] + " for " + component.name );
+                        groupTable(component, group[1]);
+                    }
+            };
+            component.postExecution =  function() {
+                    bootstrapTable();
+                    if (previousPostExec) {
+                        previousPostExec();
+                    }
+
                     return true;
             };
         }

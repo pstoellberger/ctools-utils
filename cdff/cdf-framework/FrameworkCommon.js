@@ -27,10 +27,11 @@ var render_row_viz =  function(el, type, prefix) {
             val = (typeof val != "undefined" && val != "" && val != null && val  != "undefined") ? parseFloat(val) : 0;
             rowData.push(val);
         });
-        
+        var width = rowData.length * 9;
+
         $("<td class='spark'>&nbsp;<div id='chart" + prefix + index + "'></div></td>").appendTo($(element));
 
-        var width = rowData.length * 9;
+        
 
             if (rowData.length > 0) {
                 var vis = new pv.Panel()
@@ -56,6 +57,7 @@ var render_row_viz =  function(el, type, prefix) {
                         .strokeStyle("#000")
                         .lineWidth(1);        
                 }
+                $('#chart' + prefix + index).parent().width(width * 1.5);
                 vis.render();
             }
     });
@@ -64,17 +66,82 @@ var render_row_viz =  function(el, type, prefix) {
 var render_arrow =  function(el, prefix) {
     $(el).find('tr').each(function(index, element) {
         var last = null;
+        var first = true;
         $(element).find('td.numeric').each(function(i,data) {
             var val = $(data).text().replace(",","");
-            val = (typeof val != "undefined" && val != "" && val != null && val  != "undefined") ? parseFloat(val) : 0;
-            if (last == val) {
+            var isEmpty = !(typeof val != "undefined" && val != "" && val != null && val  != "undefined");
+            val = !isEmpty ? parseFloat(val) : 0;
+            if ( (isEmpty) || (!first && last == val)) {
                 $(data).addClass('arrow_none');
-            } else if (val > last) {
-                $(data).addClass('arrow_up');
-            } else if (val < last) {
-                $(data).addClass('arrow_down');
+            } else {
+                if (val > last) {
+                    $(data).addClass('arrow_up');
+                } else if (val < last) {
+                    $(data).addClass('arrow_down');
+                }
+                last = val;
+                first = false;
             }
-            last = val;
         });
     });
 }; 
+
+var showDetails = function(event) {
+    console.log(event.target);
+    var h = $(event.currentTarget);
+    var r = h.attr('rel');
+    if (h.hasClass('expanded')) {
+        h.parent().parent().find('tr[rel="' + r + '"].groupdetails').hide();
+        h.removeClass('expanded');
+        h.addClass('collapsed');
+    } else {
+        h.parent().parent().find('tr[rel="' + r + '"].groupdetails').show();
+        h.addClass('expanded');
+        h.removeClass('collapsed');
+    }
+    
+};
+
+var groupTable = function(component, column) {
+    var table = component.ph;
+    var grouping = null;
+    var groupnr = 0;
+    $(table).find('tbody td.' + column).each( function(index,element) {
+        var text = $(element).text();
+            if (grouping && grouping == text) {
+                $(element).parent().addClass('groupdetails');
+                $(element).parent().hide();
+                $(element).text("");
+            } else {
+                $(element).parent().addClass('groupheader collapsed');
+                grouping = text;
+                groupnr++;
+            }
+
+            $(element).parent().attr('rel', 'group' + groupnr);
+    });
+
+    $(table).find('tr.groupheader').each(function(index,element) {
+        var r = $(element).attr('rel');
+        $(table).find('tr.groupheader[rel="' + r + '"] td.' + column).append(' <span class="badge pull-right">' + ($(table).find('tr.groupdetails[rel="' + r + '"]').length) + '</span>');
+    });
+
+    if (component.runCounter == 1) {
+
+        $('<div class="btn-group span3 pull-left"><button type="button" class="expandbtn btn btn-default">Expand</button><button type="button" class="collapsebtn btn btn-default">Collapse</button></div>')
+            .insertBefore($(table));
+
+        $('button.expandbtn').on('click', function() {
+            $(table).find('.groupdetails').show();
+            $(table).find('.groupheader').addClass('expanded');
+            $(table).find('.groupheader').removeClass('collapsed');
+        });
+
+        $('button.collapsebtn').on('click', function() {
+            $(table).find('.groupdetails').hide();
+            $(table).find('.groupheader').removeClass('expanded');
+            $(table).find('.groupheader').addClass('collapsed');
+        });
+    }
+    $(table).find('tr.groupheader').on('click', showDetails);
+};
