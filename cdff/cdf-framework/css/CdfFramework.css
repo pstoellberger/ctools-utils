@@ -10,7 +10,6 @@ body {
 .wrapper {
 	position: relative;
 	margin-top: 80px;
-	margin-bottom: 80px;
 }
 
 .dataTables_wrapper table thead th {
@@ -144,3 +143,17 @@ td.expandingClass {
 
 tr.groupheader td {
 	font-weight: bold !important;
+}
+
+.dropdown-menu {
+	text-align: left;
+	right: 0;
+	left: auto;
+}
+
+.ui-selectable-helper{
+  position:absolute;
+  z-index:100;
+  border:2px solid #86fe00;
+  background-color: rgba(203, 239, 163, 0.6);
+} 

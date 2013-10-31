@@ -1,0 +1,21 @@
+<div id="explain">
+	CDFF is a framework using bootstrap by default. It detects charts and tables and will try and override them with default properties / global templates. </br>
+	
+		<b>Layout:</b>
+	<p>	CDFF comes with a template that includes bootstrap (CDFF delivers that) and a Single-page dashboardlayout template for the dashboard content.
+		This could be extended with other layouts as well.
+	</p><p>
+		Each dashboard can use its own HTML snippet for the content of the dashboardlayouts.<br>
+		Which is either defined in <i>dashboard name</i>.cdff.html or directly in the dashboard's definition file: <i>dashboard name</i>.cdff.js.
+	</p>
+		<br/>
+		<p>Additionally each dashboard will try and load a <i>dashboard name</i>.cdff.css for including a css definition that only this dashboard utilizies.
+		Global definitions should be included in the cde template!
+	</p>
+</div>
+<div id="chart" />
+<div id="legend" />
+<div id="table" class="table"/>
+
+
+

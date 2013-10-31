@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdf><title>CDFF Sample1</title><description>Sample dashboard that acts as a "Start here" for CDE dashboard development</description><author></author><style>cdff-bootstrap</style><rendererType>blueprint</rendererType><widget>false</widget><widgetName></widgetName><widgetParameters></widgetParameters></cdf>

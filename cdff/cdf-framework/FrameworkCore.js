@@ -10,6 +10,16 @@ var CdfFramework = {
                type: "text/css",
                href: this.cssUrl,
             }).appendTo("head");
+            $("<script/>", {
+               type: "text/javascript",
+               src: this.jsUrl,
+            }).appendTo("head");
+
+/*
+            var script = document.createElement('script');
+                script.type = "text/javascript";
+                script.src = this.jsUrl;
+                document.getElementsByTagName('head')[0].appendChild(script);
 
             $.ajax({
               url: this.jsUrl,
@@ -17,6 +27,7 @@ var CdfFramework = {
               async: false
             });
 
+*/
             if (CdfFramework.dashboard) {
                 if (CdfFramework.dashboard.templateUrl) {
                         CdfFramework.dashboard.templateHtml = this.getTemplate(CdfFramework.dashboard.templateUrl);    
@@ -69,9 +80,12 @@ var CdfFramework = {
 };
 
 
- 
+var preInit = (Dashboards.preInit  ? Dashboards.preInit : null);
 
 Dashboards.preInit = function () {
+    if (preInit) {
+        preInit();
+    }
     CdfFramework.init();
     
     _.each(Dashboards.components, function(component) {
@@ -90,6 +104,8 @@ Dashboards.preInit = function () {
             var previousPostExec = null;
             if (component.postExecution) {
                 previousPostExec = component.postExecution;
+            } else {
+                previousPostExec = function() { return true; };
             }
             var bootstrapTable = function() {
                     component.ph.find('.tableComponent').addClass('form-inline table table-striped table-bordered');
@@ -112,9 +128,14 @@ Dashboards.preInit = function () {
                     }
             };
             component.postExecution =  function() {
+
+                try {
                     bootstrapTable();
-                    if (previousPostExec) {
-                        previousPostExec();
+                        if (previousPostExec) {                            
+                                previousPostExec();
+                        }
+                    } catch(e) {
+                            Dashboards.log("Error: " + e);
                     }
 
                     return true;

@@ -57,7 +57,7 @@ var render_row_viz =  function(el, type, prefix) {
                         .strokeStyle("#000")
                         .lineWidth(1);        
                 }
-                $('#chart' + prefix + index).parent().width(width * 1.5);
+                $('#chart' + prefix + index).parent().width(width * 2);
                 vis.render();
             }
     });
@@ -87,7 +87,6 @@ var render_arrow =  function(el, prefix) {
 }; 
 
 var showDetails = function(event) {
-    console.log(event.target);
     var h = $(event.currentTarget);
     var r = h.attr('rel');
     if (h.hasClass('expanded')) {
@@ -128,20 +127,24 @@ var groupTable = function(component, column) {
 
     if (component.runCounter == 1) {
 
-        $('<div class="btn-group span3 pull-left"><button type="button" class="expandbtn btn btn-default">Expand</button><button type="button" class="collapsebtn btn btn-default">Collapse</button></div>')
+        $('<div class="btn-group span3 pull-left expand-btn-group"><button type="button" class="expandbtn collapsed btn btn-default">Expand Groups</button></div>')
             .insertBefore($(table));
 
         $('button.expandbtn').on('click', function() {
-            $(table).find('.groupdetails').show();
-            $(table).find('.groupheader').addClass('expanded');
-            $(table).find('.groupheader').removeClass('collapsed');
-        });
-
-        $('button.collapsebtn').on('click', function() {
-            $(table).find('.groupdetails').hide();
-            $(table).find('.groupheader').removeClass('expanded');
-            $(table).find('.groupheader').addClass('collapsed');
+            if ($('button.expandbtn').hasClass('collapsed')) {
+                $(table).find('.groupdetails').show();
+                $(table).find('.groupheader').addClass('expanded');
+                $(table).find('.groupheader').removeClass('collapsed');
+                $('button.expandbtn').removeClass('collapsed').addClass('expanded').text('Collapse Groups');
+            } else {
+                $(table).find('.groupdetails').hide();
+                $(table).find('.groupheader').removeClass('expanded');
+                $(table).find('.groupheader').addClass('collapsed');    
+                $('button.expandbtn').removeClass('expanded').addClass('collapsed').text('Expand Groups');
+            }
+            
         });
     }
     $(table).find('tr.groupheader').on('click', showDetails);
+    $('button.expandbtn').removeClass('expanded').addClass('collapsed').text('Expand Groups');
 };
